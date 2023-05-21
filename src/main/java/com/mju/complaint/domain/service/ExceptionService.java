@@ -1,6 +1,7 @@
 package com.mju.complaint.domain.service;
 
 import com.mju.complaint.domain.model.Exception.ExceptionList;
+import com.mju.complaint.domain.model.Exception.NonExceptionReportedCommend;
 import com.mju.complaint.domain.model.Exception.NonExceptionReportedQuestion;
 import com.mju.complaint.domain.model.Exception.ServerRequestFailed;
 import com.mju.complaint.domain.model.Result.CommonResult;
@@ -36,6 +37,13 @@ public class ExceptionService {
     @ExceptionHandler({NonExceptionReportedQuestion.class})
     protected CommonResult handleCustom(NonExceptionReportedQuestion e) {
         log.error("Non Exception Question", e);
+        ExceptionList exceptionList = e.getExceptionList();
+        return responseService.getFailResult(exceptionList.getCode(), exceptionList.getMessage());
+    }
+
+    @ExceptionHandler({NonExceptionReportedCommend.class})
+    protected CommonResult handleCustom(NonExceptionReportedCommend e) {
+        log.error("Non Exception Commend", e);
         ExceptionList exceptionList = e.getExceptionList();
         return responseService.getFailResult(exceptionList.getCode(), exceptionList.getMessage());
     }
