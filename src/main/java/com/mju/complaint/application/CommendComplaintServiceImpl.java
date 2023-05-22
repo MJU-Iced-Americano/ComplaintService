@@ -66,8 +66,6 @@ public class CommendComplaintServiceImpl implements CommendComplaintService {
             if (data != null) {
                 reportedCommendList.add(data);
                 visitedCommendIndexes.add(commendIndex);
-            }else {
-                throw new ServerRequestFailed(ExceptionList.SERVER_REQUEST_FAILED);
             }
         }
 
