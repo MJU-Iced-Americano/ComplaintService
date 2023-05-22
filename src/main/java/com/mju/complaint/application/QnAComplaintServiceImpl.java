@@ -59,11 +59,10 @@ public class QnAComplaintServiceImpl implements QnAComplaintService {
             }
             SingleResult<LinkedHashMap<String, Object>> requestResult = questionBoardServiceClient.questionFindById(questionIndex);
             LinkedHashMap<String, Object> data = requestResult.getData();
+            System.out.println(data);
             if (data != null) {
                 complaintQuestionList.add(data);
                 visitedQuestionIndexes.add(questionIndex);
-            }else {
-                throw new ServerRequestFailed(ExceptionList.SERVER_REQUEST_FAILED);
             }
         }
 

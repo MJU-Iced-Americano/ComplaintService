@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface QuestionBoardServiceClient {
 
     @GetMapping("/board-service/question/show/request/{questionIndex}")
-    public SingleResult questionFindById(@PathVariable long questionIndex);
+    public SingleResult questionFindById(@PathVariable Long questionIndex);
 
     @GetMapping("/board-service/commend/show/request/{commendIndex}")
-    public SingleResult commendFindById(@PathVariable long commendIndex);
+    public SingleResult commendFindById(@PathVariable Long commendIndex);
 
 }
