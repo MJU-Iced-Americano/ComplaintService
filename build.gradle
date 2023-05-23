@@ -48,3 +48,16 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+tasks {
+	jar {
+		enabled = false
+	}
+}
+jar {
+	manifest {
+		attributes(
+				'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' '),
+				'Main-Class': 'com.mju.complaint.ComplaintApplication'
+		)
+	}
+}
