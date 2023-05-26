@@ -17,11 +17,12 @@ public class Complaint {
     }
 
     @Builder
-    public Complaint(String complaintContent, ComplaintType type , Long questionIndex, Long commendIndex /* ,QuestionCommend questionCommend*/){
+    public Complaint(String complaintContent, ComplaintType type , Long questionIndex, Long commendIndex, Long reviewIndex /* ,QuestionCommend questionCommend*/){
         this.complaintContent= complaintContent;
         this.type = type;
         this.questionIndex = questionIndex;
         this.commendIndex = commendIndex;
+        this.reviewIndex = reviewIndex;
     }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,6 +42,9 @@ public class Complaint {
 
     @Column(name = "commend_index")
     private Long commendIndex;
+
+    @Column(name = "review_index")
+    private Long reviewIndex;
 
 //    @JsonIgnore
 //    @ManyToOne
