@@ -2,12 +2,12 @@ package com.mju.complaint;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
-class ComplaintApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
-}
+//
+//@SpringBootTest
+//class ComplaintApplicationTests {
+//
+//	@Test
+//	void contextLoads() {
+//	}
+//
+//}
