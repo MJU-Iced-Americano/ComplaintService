@@ -37,13 +37,13 @@ jobs:
 
     # Docker 이미지 Build (2)
     - name: docker image build
-      run: docker build -t ${{secrets.DOCKERHUB_USERNAME}}/${{secrets.DOCKERHUB_REPOSITORY}} .
+      run: docker build -t devlee9910/softcoa-complaint-service .
 
     # Docker Hub login & push (3)
     - name: Docker Hub push
       run: |
-        docker login -u ${{secrets.DOCKERHUB_USERNAME}} -p ${{secrets.DOCKERHUB_TOKEN}}
-        docker push ${{secrets.DOCKERHUB_USERNAME}}/${{secrets.DOCKERHUB_REPOSITORY}}
+        docker login -u devlee9910 -p ${{secrets.DOCKERHUB_TOKEN}}
+        docker push devlee9910/softcoa-complaint-service
       
     # 서버에서 Docker 이미지 실행 (4) 
     - name: EC2 Docker Run
