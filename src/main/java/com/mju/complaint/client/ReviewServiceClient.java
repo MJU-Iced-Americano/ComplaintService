@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "review-service")
 public interface ReviewServiceClient {
 
-    @GetMapping("/review-service/review/show/request/{reviewIndex}")
+    @GetMapping("13.209.194.108/review-service/review/show/request/{reviewIndex}")
     public SingleResult reviewFindById(@PathVariable Long reviewIndex);
 }

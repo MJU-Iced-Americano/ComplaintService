@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @FeignClient(name = "board-service")
 public interface QuestionBoardServiceClient {
 
-    @GetMapping("/board-service/question/show/request/{questionIndex}")
+    @GetMapping("3.34.240.33/board-service/question/show/request/{questionIndex}")
     public SingleResult questionFindById(@PathVariable Long questionIndex);
 
-    @GetMapping("/board-service/commend/show/request/{commendIndex}")
+    @GetMapping("3.34.240.33/board-service/commend/show/request/{commendIndex}")
     public SingleResult commendFindById(@PathVariable Long commendIndex);
 
 }
