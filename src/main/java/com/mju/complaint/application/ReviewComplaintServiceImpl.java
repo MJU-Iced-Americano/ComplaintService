@@ -21,17 +21,20 @@ public class ReviewComplaintServiceImpl implements ReviewComplaintService{
     private final ReviewServiceClient reviewServiceClient;
     @Override
     @Transactional
-    public void registerReview(Long reviewIndex, ComplaintRegisterDto complaintRegisterDto) {
+    public void registerReview(String userId, Long reviewIndex, ComplaintRegisterDto complaintRegisterDto) {
         SingleResult<LinkedHashMap<String, Object>> requestResult = reviewServiceClient.reviewFindById(reviewIndex);
         LinkedHashMap<String, Object> data = requestResult.getData();
         if (data!=null){
             Integer reviewIndexInt = (Integer) data.get("reviewIndex");
             Long reviewIndexValue = reviewIndexInt.longValue();
+            String reportedUserId = (String) data.get("userId");//리뷰서비스에서 이거 넣어놔야 해 참고로 조회를 위해 Name도 같이
 
             Complaint complaint = Complaint.builder()
                     .reviewIndex(reviewIndexValue)
                     .complaintContent(complaintRegisterDto.getComplaintContent())
                     .type(complaintRegisterDto.getType())
+                    .userId(userId)
+                    .reportedUserId(reportedUserId)
                     .build();
             complaintRepository.save(complaint);
         } else {

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ReviewComplaintService {
 
-    public void registerReview(Long reviewIndex, ComplaintRegisterDto complaintRegisterDto);
+    public void registerReview(String userId, Long reviewIndex, ComplaintRegisterDto complaintRegisterDto);
 
     public List<Object> getReviewList();
 

@@ -23,7 +23,7 @@ public class CommendComplaintServiceImpl implements CommendComplaintService {
     private final QuestionBoardServiceClient questionBoardServiceClient;
     @Override
     @Transactional
-    public void registerCommend(Long commendIndex, ComplaintRegisterDto complaintRegisterDto) {
+    public void registerCommend(String userId, Long commendIndex, ComplaintRegisterDto complaintRegisterDto) {
         //Data Type: class java.util.LinkedHashMap
         SingleResult<LinkedHashMap<String, Object>> requestResult = questionBoardServiceClient.commendFindById(commendIndex);
         // 선택한 questionIndex의 유효성 확인
@@ -35,12 +35,15 @@ public class CommendComplaintServiceImpl implements CommendComplaintService {
             Integer commendIndexInt  = (Integer) data.get("commendIndex");
             Long questionIndexValue = questionIndexInt.longValue();
             Long commendIndexValue = commendIndexInt.longValue();
+            String reportedUserId = (String) data.get("userId");
 
             Complaint complaint = Complaint.builder()
                     .questionIndex(questionIndexValue)
                     .commendIndex(commendIndexValue)
                     .complaintContent(complaintRegisterDto.getComplaintContent())
                     .type(complaintRegisterDto.getType())
+                    .userId(userId)
+                    .reportedUserId(reportedUserId)
                     .build();
             complaintRepository.save(complaint);
         }else{

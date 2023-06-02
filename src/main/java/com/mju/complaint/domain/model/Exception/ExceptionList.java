@@ -16,7 +16,12 @@ public enum ExceptionList {
     NON_EXCEPTION_REPORTED_COMMEND(-2100, "신고된 답변 문의 목록이 존재하지 않습니다."),
     NOT_REPORTED_COMMEND(-6004, "신고되지 않은 답변을 불러오고 있습니다."),
     NON_EXCEPTION_REPORTED_REVIEW(-2200, "신고된 리뷰 목록이 존재하지 않습니다."),
-    NOT_REPORTED_REVIEW(-6004, "신고되지 않은 리뷰 불러오고 있습니다.")
+    NOT_REPORTED_REVIEW(-6004, "신고되지 않은 리뷰 불러오고 있습니다."),
+    //////////////////////////유저 오류////////////////////////
+    NOT_EXISTENT_USER(-5055, "존재하지 않는 유저입니다."),
+    EMPTY_USER(-5051, "유저 정보를 입력해 주세요."),
+    EMPTY_JWT(-5054, "토큰이 없습니다. 확인부탁드립니다."),
+    NOT_MANAGER_USER(-5052, "관리자가 아닙니다. 관리자로 로그인 다시 부탁드립니다.")
     ;
     private final int code;
     private final String message;

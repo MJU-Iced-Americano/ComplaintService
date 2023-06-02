@@ -1,12 +1,10 @@
 package com.mju.complaint.client;
 
-import com.mju.complaint.domain.model.Result.CommonResult;
 import com.mju.complaint.domain.model.Result.SingleResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-@FeignClient(name = "board-service")
+@FeignClient(name = "board-service", url = "http://3.34.240.33:8080")
 public interface QuestionBoardServiceClient {
 
     @GetMapping("/board-service/question/show/request/{questionIndex}")

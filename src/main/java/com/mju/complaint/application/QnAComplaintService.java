@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public interface QnAComplaintService {
-    public void registerQnA(Long questionIndex, ComplaintRegisterDto complaintRegisterDto);
+    public void registerQnA(String userId, Long questionIndex, ComplaintRegisterDto complaintRegisterDto);
 
     public List<Object> getQnABoardList();
 

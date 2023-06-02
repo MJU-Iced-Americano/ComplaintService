@@ -1,9 +1,6 @@
 package com.mju.complaint.domain.service;
 
-import com.mju.complaint.domain.model.Exception.ExceptionList;
-import com.mju.complaint.domain.model.Exception.NonExceptionReportedCommend;
-import com.mju.complaint.domain.model.Exception.NonExceptionReportedQuestion;
-import com.mju.complaint.domain.model.Exception.ServerRequestFailed;
+import com.mju.complaint.domain.model.Exception.*;
 import com.mju.complaint.domain.model.Result.CommonResult;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
@@ -52,6 +49,13 @@ public class ExceptionService {
     public CommonResult handleFeignException(FeignException e) {
         log.error("feign exception", e);
         return responseService.getFailResult(ExceptionList.NON_EXCEPTION_INDEX.getCode(), ExceptionList.NON_EXCEPTION_INDEX.getMessage());
+    }
+
+    @ExceptionHandler({NonExceptionUser.class})
+    protected CommonResult handleCustom(NonExceptionUser e) {
+        log.error("Non Exception User", e);
+        ExceptionList exceptionList = e.getExceptionList();
+        return responseService.getFailResult(exceptionList.getCode(), exceptionList.getMessage());
     }
 
 }

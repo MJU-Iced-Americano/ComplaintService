@@ -22,7 +22,7 @@ public class QnAComplaintServiceImpl implements QnAComplaintService {
     private final QuestionBoardServiceClient questionBoardServiceClient;
     @Override
     @Transactional
-    public void registerQnA(Long questionIndex, ComplaintRegisterDto complaintRegisterDto) {
+    public void registerQnA(String userId, Long questionIndex, ComplaintRegisterDto complaintRegisterDto) {
         //Data Type: class java.util.LinkedHashMap
         SingleResult<LinkedHashMap<String, Object>> requestResult = questionBoardServiceClient.questionFindById(questionIndex);
         // 선택한 questionIndex의 유효성 확인
@@ -32,11 +32,13 @@ public class QnAComplaintServiceImpl implements QnAComplaintService {
             //{questionIndex=1002, questionTitle=ㅎㅎ용, questionImageList=[{imageIndex=402, imageUrl=https://iceamericano-board.s3.ap-northeast-2.amazonaws.com/57ca58ed-c5bc-45d7-a349-2d4058741130_캡처.PNG}], questionContent=테스트용ㅇ, createdAt=2023-05-08T02:05:44, updatedAt=2023-05-08T20:59:50, type=PAYMENT, goodCount=15, commendList=[]}
             Integer questionIndexInt  = (Integer) data.get("questionIndex");
             Long questionIndexValue = questionIndexInt.longValue();
-
+            String reportedUserId = (String) data.get("userId");
             Complaint complaint = Complaint.builder()
                     .questionIndex(questionIndexValue)
                     .complaintContent(complaintRegisterDto.getComplaintContent())
                     .type(complaintRegisterDto.getType())
+                    .userId(userId)
+                    .reportedUserId(reportedUserId)
                     .build();
             complaintRepository.save(complaint);
         }else{
@@ -59,7 +61,7 @@ public class QnAComplaintServiceImpl implements QnAComplaintService {
             }
             SingleResult<LinkedHashMap<String, Object>> requestResult = questionBoardServiceClient.questionFindById(questionIndex);
             LinkedHashMap<String, Object> data = requestResult.getData();
-            System.out.println(data);
+
             if (data != null) {
                 complaintQuestionList.add(data);
                 visitedQuestionIndexes.add(questionIndex);

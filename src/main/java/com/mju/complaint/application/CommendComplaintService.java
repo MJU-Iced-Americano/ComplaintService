@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public interface CommendComplaintService {
-    public void registerCommend(Long commendIndex, ComplaintRegisterDto complaintRegisterDto);
+    public void registerCommend(String userId, Long commendIndex, ComplaintRegisterDto complaintRegisterDto);
 
     public List<Object> getCommendList();
 
