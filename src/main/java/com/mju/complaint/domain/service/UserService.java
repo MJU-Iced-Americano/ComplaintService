@@ -6,7 +6,6 @@ import com.mju.complaint.client.UserFeignClient;
 import com.mju.complaint.domain.model.Exception.NonExceptionUser;
 import com.mju.complaint.presentation.dto.UserInfoDto;
 import com.nimbusds.jwt.SignedJWT;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 
 import static com.mju.complaint.domain.model.Exception.ExceptionList.*;
+
 
 @Slf4j
 @Service
@@ -30,23 +30,19 @@ public class UserService {
      * @param request
      * */
     public String getUserId(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        String ssoToken = null;
-        if(cookies != null && cookies.length != 0){
-            for(Cookie cookie : cookies){
-                if(cookie.getName().equals("SOCOA-SSO-TOKEN")){
-                    ssoToken = cookie.getValue();
-                }
+        String authorizationHeader = request.getHeader("Authorization");
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String ssoToken = authorizationHeader.substring(7); // "Bearer " 부분을 제거하여 토큰 값만 추출
+            if (ssoToken == null) {
+                return null;
             }
+            HttpCookie token = new HttpCookie("ssoToken", ssoToken);
+            String userId = getUserInfoDto(token).getId();
+            System.out.println(userId);
+            return userId;
+        }else{
+            throw new NonExceptionUser(EMPTY_JWT);
         }
-
-        if (ssoToken == null) {
-            return null;
-        }
-
-        HttpCookie token = new HttpCookie("ssoToken", ssoToken);
-        String userId = getUserInfoDto(token).getId();
-        return userId;
     }
 
     /**
@@ -55,6 +51,7 @@ public class UserService {
      * */
     public UserInfoDto getUserInfoDto(final HttpCookie ssoToken) {
         String userId = extractLoginUserId(ssoToken);
+
         UserInfoDto userInfoDto = userFeignClient.getUserInfo(userId);
         if (userInfoDto == null) {
             throw new NonExceptionUser(NOT_EXISTENT_USER);
@@ -69,7 +66,7 @@ public class UserService {
     private String extractLoginUserId(final HttpCookie ssoToken) {
         try {
             String tokenPayload = SignedJWT.parse(ssoToken.getValue()).getPayload().toString();
-            System.out.println(tokenPayload);
+//            System.out.println(tokenPayload);
             return objectMapper.readTree(tokenPayload).path("sub").asText();
 
         } catch (ParseException | JsonProcessingException e) {
