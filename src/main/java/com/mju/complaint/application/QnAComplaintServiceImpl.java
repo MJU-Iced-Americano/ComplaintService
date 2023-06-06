@@ -96,7 +96,7 @@ public class QnAComplaintServiceImpl implements QnAComplaintService {
     @Override
     @Transactional //신고된 questionindex에서 complaintList를 가져와야해.
     public List<Complaint> getReportedQnA(long reportedQnAIndex) {
-        List<Complaint> qnaComplaintList = complaintRepository.findAllByQuestionIndexNotNullAndQuestionIndex(reportedQnAIndex);
+        List<Complaint> qnaComplaintList = complaintRepository.findByReportedQnAList(reportedQnAIndex);
         if(!qnaComplaintList.isEmpty()){
             return qnaComplaintList;
         }else {
